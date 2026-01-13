@@ -1,0 +1,29 @@
+# Build outputs
+bin/
+obj/
+*.dll
+*.pdb
+*.exe
+
+# Keep the release DLL for easy download
+!org.obsidian.BinaryFilesNoResize/bin/Release/org.obsidian.BinaryFilesNoResize.dll
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet
+packages/
+*.nupkg
+
+# IDE
+.idea/
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
