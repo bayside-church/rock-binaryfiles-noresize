@@ -10,7 +10,7 @@ using Rock.Rest;
 using Rock.Rest.Filters;
 using Rock.Utility;
 
-namespace com.BaysideChurch.Rest
+namespace com.BaysideChurch.BinaryFilesNoResize
 {
     /// <summary>
     /// REST API controller for uploading binary files with optional image resize control.
