@@ -34,7 +34,7 @@ POST /api/BinaryFilesNoResize/Upload
 
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|---------|-------------|
-| `binaryFileTypeGuid` | Guid | Yes | - | The GUID of the BinaryFileType for the upload |
+| `binaryFileTypeId` | int | Yes | - | The ID of the BinaryFileType for the upload |
 | `resizeIfImage` | bool | No | `true` | When `false`, skips the 1024x768 resize |
 
 ### Request
@@ -48,7 +48,7 @@ POST /api/BinaryFilesNoResize/Upload
 | Code | Condition | Body |
 |------|-----------|------|
 | 201 Created | Success | `BinaryFile.Id` (integer) |
-| 400 Bad Request | Invalid GUID or no file | Error message string |
+| 400 Bad Request | No file provided | Error message string |
 | 401 Unauthorized | Missing/invalid authentication | - |
 | 500 Internal Server Error | Unexpected error | Error message string |
 
@@ -57,7 +57,7 @@ POST /api/BinaryFilesNoResize/Upload
 **Upload without resize (preserve original dimensions):**
 ```bash
 curl -X POST \
-  "https://your-rock-server/api/BinaryFilesNoResize/Upload?binaryFileTypeGuid=03BD8476-8A9F-4078-B628-5B538F967AFC&resizeIfImage=false" \
+  "https://your-rock-server/api/BinaryFilesNoResize/Upload?binaryFileTypeId=5&resizeIfImage=false" \
   -H "Authorization-Token: YOUR-API-KEY" \
   -F "file=@high-resolution-image.jpg"
 ```
@@ -65,7 +65,7 @@ curl -X POST \
 **Upload with resize (matches Rock's default behavior):**
 ```bash
 curl -X POST \
-  "https://your-rock-server/api/BinaryFilesNoResize/Upload?binaryFileTypeGuid=03BD8476-8A9F-4078-B628-5B538F967AFC&resizeIfImage=true" \
+  "https://your-rock-server/api/BinaryFilesNoResize/Upload?binaryFileTypeId=5&resizeIfImage=true" \
   -H "Authorization-Token: YOUR-API-KEY" \
   -F "file=@image.jpg"
 ```
@@ -73,7 +73,7 @@ curl -X POST \
 **PowerShell Example:**
 ```powershell
 $headers = @{ "Authorization-Token" = "YOUR-API-KEY" }
-$uri = "https://your-rock-server/api/BinaryFilesNoResize/Upload?binaryFileTypeGuid=03BD8476-8A9F-4078-B628-5B538F967AFC&resizeIfImage=false"
+$uri = "https://your-rock-server/api/BinaryFilesNoResize/Upload?binaryFileTypeId=5&resizeIfImage=false"
 
 $form = @{
     file = Get-Item -Path "C:\path\to\image.jpg"
@@ -139,26 +139,28 @@ After deployment, configure permissions for the new endpoint:
 
 ---
 
-## Finding BinaryFileType GUIDs
+## Finding BinaryFileType IDs
 
-To find the GUID for your desired BinaryFileType:
+To find the ID for your desired BinaryFileType:
 
 **Via Rock Admin:**
 1. Navigate to **Admin Tools > General Settings > File Types**
 2. Click on the file type
-3. The GUID is shown in the URL or can be found in the file type details
+3. The ID is shown in the URL (e.g., `/BinaryFileType/5`)
 
 **Via Database:**
 ```sql
-SELECT Id, Name, [Guid] FROM BinaryFileType ORDER BY Name
+SELECT Id, Name FROM BinaryFileType ORDER BY Name
 ```
 
-**Common BinaryFileType GUIDs:**
-| Name | GUID |
-|------|------|
-| Person Image | `03BD8476-8A9F-4078-B628-5B538F967AFC` |
-| Content Channel Item Image | `8DBF874C-F3C2-4848-8137-C963C431EB0B` |
-| Check-in Label | `DE0E5C50-234B-474C-940C-C571F385E65F` |
+**Common BinaryFileType IDs:**
+| Id | Name |
+|----|------|
+| 1 | Check-in Label |
+| 2 | Transaction Image |
+| 3 | Unsecured |
+| 5 | Person Image |
+| 6 | Content Channel Item Image |
 
 ---
 
