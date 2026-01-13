@@ -91,7 +91,7 @@ Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Form $form
 - Rock RMS v13.0 or later
 - Administrator access to the Rock server
 
-### Option 1: Download Pre-built DLL (Recommended)
+### Installation
 
 1. Download `org.obsidian.BinaryFilesNoResize.dll` from the [Releases](../../releases) page
 
@@ -108,51 +108,9 @@ Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Form $form
    ```
    Or recycle the specific app pool from IIS Manager.
 
-4. Verify the plugin loaded by checking:
-   - **Admin Tools > Security > REST Controllers** - Look for `BinaryFilesNoResize`
-   - Or query the database:
-     ```sql
-     SELECT * FROM RestController WHERE ClassName LIKE '%NoResize%'
-     ```
+4. Verify the plugin loaded by checking **Admin Tools > Security > REST Controllers** for `BinaryFilesNoResize`
 
-### Option 2: Build from Source
-
-#### Prerequisites for Building
-
-- Access to Rock.dll and Rock.Rest.dll from your Rock installation
-- The Roslyn C# compiler (included in Rock's `Bin\roslyn` folder)
-
-#### Build Steps
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/bayside-church/rock-binaryfiles-noresize.git
-   cd rock-binaryfiles-noresize
-   ```
-
-2. Update the reference paths in `org.obsidian.BinaryFilesNoResize.csproj` to point to your Rock installation:
-   ```xml
-   <HintPath>C:\inetpub\wwwroot\Bin\Rock.dll</HintPath>
-   <HintPath>C:\inetpub\wwwroot\Bin\Rock.Rest.dll</HintPath>
-   ```
-
-3. Compile using Rock's Roslyn compiler:
-   ```powershell
-   & 'C:\inetpub\wwwroot\Bin\roslyn\csc.exe' `
-     /target:library `
-     /out:bin\Release\org.obsidian.BinaryFilesNoResize.dll `
-     /reference:'C:\inetpub\wwwroot\Bin\Rock.dll' `
-     /reference:'C:\inetpub\wwwroot\Bin\Rock.Rest.dll' `
-     /reference:'C:\inetpub\wwwroot\Bin\System.Web.Http.dll' `
-     /reference:'C:\inetpub\wwwroot\Bin\System.Web.Http.WebHost.dll' `
-     /reference:'C:\inetpub\wwwroot\Bin\System.Net.Http.Formatting.dll' `
-     /reference:'C:\inetpub\wwwroot\Bin\EntityFramework.dll' `
-     /reference:'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\System.Web.dll' `
-     /reference:'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\System.Net.Http.dll' `
-     BinaryFilesNoResizeController.cs
-   ```
-
-4. Copy the built DLL to Rock's Bin folder and restart IIS (see Option 1, steps 2-4)
+That's it! Rock automatically discovers and loads plugin DLLs from the Bin folder on startup.
 
 ---
 
@@ -282,6 +240,35 @@ org.obsidian.BinaryFilesNoResize/
 ## License
 
 MIT License - See [LICENSE](LICENSE) file for details.
+
+---
+
+## Building from Source
+
+<details>
+<summary>Click to expand build instructions (for developers only)</summary>
+
+If you want to modify the plugin, you can build from source using Rock's Roslyn compiler:
+
+1. Clone this repository
+2. Update the reference paths in `org.obsidian.BinaryFilesNoResize.csproj` to point to your Rock installation
+3. Compile:
+   ```powershell
+   & 'C:\inetpub\wwwroot\Bin\roslyn\csc.exe' `
+     /target:library `
+     /out:org.obsidian.BinaryFilesNoResize.dll `
+     /reference:'C:\inetpub\wwwroot\Bin\Rock.dll' `
+     /reference:'C:\inetpub\wwwroot\Bin\Rock.Rest.dll' `
+     /reference:'C:\inetpub\wwwroot\Bin\System.Web.Http.dll' `
+     /reference:'C:\inetpub\wwwroot\Bin\System.Net.Http.Formatting.dll' `
+     /reference:'C:\inetpub\wwwroot\Bin\EntityFramework.dll' `
+     /reference:'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\System.Web.dll' `
+     /reference:'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\System.Net.Http.dll' `
+     org.obsidian.BinaryFilesNoResize\BinaryFilesNoResizeController.cs
+   ```
+4. Copy the DLL to Rock's Bin folder and restart IIS
+
+</details>
 
 ---
 
