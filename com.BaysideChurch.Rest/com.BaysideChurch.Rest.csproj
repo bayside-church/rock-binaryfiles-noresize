@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0177F2F2-03C8-45A6-92D2-0483F65EDE44}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>org.obsidian.BinaryFilesNoResize</RootNamespace>
-    <AssemblyName>org.obsidian.BinaryFilesNoResize</AssemblyName>
+    <RootNamespace>com.BaysideChurch.Rest</RootNamespace>
+    <AssemblyName>com.BaysideChurch.Rest</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <LangVersion>latest</LangVersion>

@@ -93,11 +93,11 @@ Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Form $form
 
 ### Installation
 
-1. Download `org.obsidian.BinaryFilesNoResize.dll` from the [Releases](../../releases) page
+1. Download `com.BaysideChurch.Rest.dll` from the [Releases](../../releases) page
 
 2. Copy the DLL to your Rock installation's `Bin` folder:
    ```
-   C:\inetpub\wwwroot\Bin\org.obsidian.BinaryFilesNoResize.dll
+   C:\inetpub\wwwroot\Bin\com.BaysideChurch.Rest.dll
    ```
    (Adjust path based on your Rock installation location)
 
@@ -209,12 +209,12 @@ ContentStream = FileUtilities.GetFileContentStream(uploadedFile, resizeIfImage);
 ### Project Structure
 
 ```
-org.obsidian.BinaryFilesNoResize/
+com.BaysideChurch.Rest/
 ├── BinaryFilesNoResizeController.cs   # REST API controller
-├── org.obsidian.BinaryFilesNoResize.csproj
+├── com.BaysideChurch.Rest.csproj
 └── bin/
     └── Release/
-        └── org.obsidian.BinaryFilesNoResize.dll
+        └── com.BaysideChurch.Rest.dll
 ```
 
 ### Dependencies
@@ -251,12 +251,12 @@ MIT License - See [LICENSE](LICENSE) file for details.
 If you want to modify the plugin, you can build from source using Rock's Roslyn compiler:
 
 1. Clone this repository
-2. Update the reference paths in `org.obsidian.BinaryFilesNoResize.csproj` to point to your Rock installation
+2. Update the reference paths in `com.BaysideChurch.Rest.csproj` to point to your Rock installation
 3. Compile:
    ```powershell
    & 'C:\inetpub\wwwroot\Bin\roslyn\csc.exe' `
      /target:library `
-     /out:org.obsidian.BinaryFilesNoResize.dll `
+     /out:com.BaysideChurch.Rest.dll `
      /reference:'C:\inetpub\wwwroot\Bin\Rock.dll' `
      /reference:'C:\inetpub\wwwroot\Bin\Rock.Rest.dll' `
      /reference:'C:\inetpub\wwwroot\Bin\System.Web.Http.dll' `
@@ -264,7 +264,7 @@ If you want to modify the plugin, you can build from source using Rock's Roslyn 
      /reference:'C:\inetpub\wwwroot\Bin\EntityFramework.dll' `
      /reference:'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\System.Web.dll' `
      /reference:'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\System.Net.Http.dll' `
-     org.obsidian.BinaryFilesNoResize\BinaryFilesNoResizeController.cs
+     com.BaysideChurch.Rest\BinaryFilesNoResizeController.cs
    ```
 4. Copy the DLL to Rock's Bin folder and restart IIS
 
